@@ -1,0 +1,21 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model FssaApplication {
+  id               String   @id @default(uuid())
+  applicantUuid    String
+  county           String   @default("Vigo")
+  programType      String   // SNAP, TANF, MEDICAID, IMPACT
+  householdSize    Int
+  grossMonthlyIncome Float
+  status           String   @default("PENDING_SUBMISSION") // SUBMITTED, UNDER_REVIEW, APPROVED, DENIED
+  submissionPayload Json
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
